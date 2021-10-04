@@ -87,4 +87,28 @@ print(flag)
 
 G. Цвет
 
-_________________________________________
+def check_colour(lines: str):
+    try:
+        tapel = lines.replace('(', ',').replace(')', '').split(',')
+        if tapel[0] == "rgba":
+            if len(tapel) != 5 or not 0 <= float(tapel[4]) <= 1:
+                return False
+            for i in range(1, 4):
+                if not 0 <= float(tapel[i]) <= 255:
+                    return False
+        else:
+            if len(tapel) != 4:
+                return False
+            if tapel[1][-1] == '%':
+                for i in range(1,4):
+                    if not 0 <= float(tapel[i][:-1]) <= 100:
+                        return False
+            else:
+                for i in range(1, 4):
+                    if not 0 <= float(tapel[i]) <= 255:
+                        return False
+        return True
+
+    except ValueError:
+        return False
+print(check_colour(input()))
