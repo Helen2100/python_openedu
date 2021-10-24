@@ -1,0 +1,42 @@
+A. Счётчик строк
+
+import os
+import sys
+import itertools
+import functools
+ 
+ 
+def form_path(p1, p2):
+    return [p1 + '\\' + pth for pth in p2]
+ 
+ 
+def project_stats(path, extensions):
+    return sum([number_of_lines(pth) for pth in with_extensions(extensions, iter_filenames(path))])
+ 
+ 
+def total_number_of_lines(filenames):
+    return sum([number_of_lines(fname) for fname in filenames])
+ 
+ 
+def number_of_lines(filename):
+    with open(filename, encoding='UTF-8') as f:
+        return sum(1 for _ in f)
+ 
+ 
+def iter_filenames(path):
+    kit = [form_path(path, files) for path, subdirs, files in os.walk(path)]
+    return functools.reduce(lambda x, y: x + y, kit)
+ 
+ 
+def with_extensions(extensions, filenames):
+    return list(filter(lambda filename: get_extension(filename) in extensions, filenames))
+ 
+ 
+def get_extension(filename):
+    return '.' + filename.split(".")[-1]
+ 
+ 
+def print_usage():
+    print("Usage: python project_sourse_stats_3.py <project_path>")
+ 
+ 

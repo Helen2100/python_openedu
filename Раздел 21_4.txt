@@ -18,7 +18,22 @@ print(max(input().split(), key=len))
 
 C. Самая длинная подстрока
 
-__________________________________
+s = input()
+temp_line = ''
+result_line = ''
+for i in s:
+    if not temp_line.__contains__(i):
+        temp_line = temp_line + i
+    elif len(temp_line) > len(result_line):
+        result_line = temp_line
+        temp_line = ''
+        temp_line = i
+    else:
+        temp_line = ''
+        temp_line = i
+if len(temp_line) > len(result_line):
+    result_line = temp_line
+print(result_line)
 
 D. Проверка строки
 
