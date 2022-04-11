@@ -1,0 +1,75 @@
+A. Простой итератор
+from math import sqrt
+from itertools import count, islice
+
+
+def is_prime(n):
+    return n > 1 and all(n % i for i in islice(count(2), int(sqrt(n) - 1)))
+
+
+class PrimesIterator:
+    def __init__(self, start=0):
+        self.start = start
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        temp = self.start
+        self.start += 1
+
+        if is_prime(temp):
+            return temp
+        else:
+            return self.__next__()
+______________________________________________________________________
+
+B. Комплексные числа
+import math
+from math import sqrt
+
+
+class ComplexNumber(object):
+
+    def __init__(self, real, imag=0.0):
+        self.real = real
+        self.imag = imag
+
+    def __add__(self, other):
+        return ComplexNumber(self.real + other.real, self.imag + other.imag)
+
+    def __sub__(self, other):
+        return ComplexNumber(self.real - other.real, self.imag - other.imag)
+
+    def __mul__(self, other):
+        return ComplexNumber((self.real * other.real) - (self.imag * other.imag),
+                       (self.imag * other.real) + (self.real * other.imag))
+
+    def __truediv__(self, other):
+        r = (other.real ** 2 + other.imag ** 2)
+        return ComplexNumber((self.real * other.real - self.imag * other.imag) / r,
+                       (self.imag * other.real + self.real * other.imag) / r)
+
+    def __abs__(self):
+        new = (self.real ** 2 + (self.imag ** 2) * -1)
+        return ComplexNumber(sqrt(new.real))
+
+    def __eq__(self, other):
+        return self.real == other.real and self.imag == other.imag
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+___________________________________________________________________________________________
+
+C. Простой класс
+
+class Student():
+    def __init__(self):
+        self.level = 0
+
+    def get_python_skill(self):
+        return self.level
+
+    def learn_python(self):
+        self.level += 1
+        return self.level
